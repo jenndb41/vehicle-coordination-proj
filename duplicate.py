@@ -1,8 +1,6 @@
 import gym
 import numpy as np
 import pygame
-from stable_baselines3 import PPO
-from stable_baselines3.common.envs import DummyVecEnv
 
 WIDTH = 1920
 HEIGHT = 1080
@@ -17,6 +15,7 @@ class CarEnv(gym.Env):
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 
         self.action_space = gym.spaces.Discrete(4)
+        self.action_space_2 = gym.spaces.Discrete(4)
         self.observation_space = gym.spaces.Discrete(GRID_SIZE[0] * GRID_SIZE[1])
 
         self.clock = pygame.time.Clock()
@@ -50,8 +49,6 @@ class CarEnv(gym.Env):
         done = not self.car.is_alive() or not self.car_2.is_alive()
         reward = self.car.get_reward() + self.car_2.get_reward()
         obs = [self.car.get_grid_cell(), self.car_2.get_grid_cell()]
-
-        pygame.event.pump()
 
         reward = 0
         x, y = self.car.position[0], self.car.position[1]
@@ -116,6 +113,8 @@ class CarEnv(gym.Env):
         else:
             reward -= self.car.get_reward()
 
+        pygame.event.pump()
+
         reward_car_2 = 0
         x_2, y_2 = self.car_2.position[0], self.car_2.position[1]
 
@@ -178,8 +177,6 @@ class CarEnv(gym.Env):
             reward_car_2 -= self.car_2.get_reward()
 
         reward += reward_car_2
-        done = self.check_collision()
-        obs = self.get_state()
         return obs, reward, done, {}
 
     def reset(self):
@@ -277,8 +274,15 @@ class Car2:
         cell_y = self.position[1] * CELL_SIZE
         pygame.draw.rect(screen, (0, 0, 0), (cell_x, cell_y, 140, 80))
 
-if __name__ == "__main__":
-    env = CarEnv()
-    env.train(total_timesteps=100000)
-    env.run(env.model)
-    env.close()
+env = CarEnv()
+obs = env.reset()
+
+done = False
+for _ in range(1000):
+    action = env.action_space.sample()
+    action_car_2 = env.action_space_2.sample()
+    obs, reward, done, _ = env.step(action, action_car_2)
+
+    env.render()
+
+env.close()
