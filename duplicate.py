@@ -2,7 +2,7 @@ import gym
 import numpy as np
 import pygame
 from stable_baselines3 import PPO
-from stable_baselines3.common.envs import make_vec_env
+from stable_baselines3.common.envs import DummyVecEnv
 
 WIDTH = 1920
 HEIGHT = 1080
@@ -199,7 +199,7 @@ class CarEnv(gym.Env):
         pygame.quit()
 
     def train(self, total_timesteps=100000):
-        env = make_env([lambda: self])
+        env = DummyVecEnv([lambda: self])
         model = PPO("MlpPolicy", env, verbose=1)
         model.learn(total_timesteps=total_timesteps)
 
