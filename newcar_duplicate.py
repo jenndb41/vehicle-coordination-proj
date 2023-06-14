@@ -64,25 +64,6 @@ class CarEnv(gym.Env):
         reward_list = [reward, reward_car_2]
         return done_list, obs_list, reward_list, {}
 
-    def reset(self):
-        self.car = Car()
-        return self.car.get_grid_cell()
-
-        self.car_2 = Car()
-        return self.car_2.get_grid_cell()
-
-    def render(self, mode='human'):
-        self.screen.blit(self.game_map, (2, 3))
-        self.car.draw(self.screen)
-        self.car_2.draw(self.screen)
-        pygame.display.flip()
-        pygame.time.wait(200)
-        self.clock.tick(60)
-
-    def close(self):
-        pygame.quit()
-
-    def train(self):
         # assign variables
         reward = 0
         x, y = self.car.position[0], self.car.position[1]
@@ -285,6 +266,24 @@ class CarEnv(gym.Env):
             reward_car_2 -= self.car_2.get_reward()
 
         return reward, reward_car_2
+
+    def reset(self):
+        self.car = Car()
+        return self.car.get_grid_cell()
+
+        self.car_2 = Car()
+        return self.car_2.get_grid_cell()
+
+    def render(self, mode='human'):
+        self.screen.blit(self.game_map, (2, 3))
+        self.car.draw(self.screen)
+        self.car_2.draw(self.screen)
+        pygame.display.flip()
+        pygame.time.wait(200)
+        self.clock.tick(60)
+
+    def close(self):
+        pygame.quit()
 
 class Car:
     def __init__(self):
