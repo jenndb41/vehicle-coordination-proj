@@ -274,15 +274,15 @@ class Car2:
         cell_y = self.position[1] * CELL_SIZE
         pygame.draw.rect(screen, (0, 0, 0), (cell_x, cell_y, 140, 80))
 
-env = CarEnv()
-obs = env.reset()
+'''env = CarEnv()
+obs = env.reset()'''
 
 done = False
-for _ in range(1000):
+'''for _ in range(1000):
     action = env.action_space.sample()
     action_car_2 = env.action_space_2.sample()
     obs, reward, done, _ = env.step(action, action_car_2)
 
     env.render()
 
-env.close()
+env.close()'''
