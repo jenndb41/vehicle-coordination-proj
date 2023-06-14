@@ -60,6 +60,62 @@ class CarEnv(ParallelEnv):
         obs_2 = self.car_2.get_grid_cell()
 
         # conditions here
+        if self.game_map.get_at(self.car.position[0], self.car.position[1]) == (255, 255, 255):
+            reward -= self.car.get_reward()
+        elif self.game_map.get_at(self.car_2.position[0], self.car_2.position[1]) == (255, 255, 255):
+            reward -= self.car.get_reward()
+
+        if self.car.position == self.car_2.position:
+                reward -= self.car.get_reward()
+                reward_2 -= self.car_2.get_reward()
+
+        # define bypass area
+        upper_bypass_area = [(2, 1)] + [(x, 0) for x in range(2, 8)] + [(8, 1)]
+        lower_bypass_area = [(2, 9)] + [(x, 9) for x in range(2, 8)] + [(8, 9)]
+
+        # checking distance of car from two openings to upper bypasses
+        distance_to_bypass1 = abs(self.car.position[0] - 2) + abs(self.car.position[1] - 1)
+        distance_to_bypass2 = abs(self.car.position[0] - 8) + abs(self.car.position[1] - 1)
+
+        # checking distance of car from two openings to lower bypasses
+        distance_to_bypass1 = abs(self.car.position[0] - 2) + abs(self.car.position[1] - 9)
+        distance_to_bypass2 = abs(self.car.position[0] - 8) + abs(self.car.position[1] - 9)
+
+        checking distance between cars
+        distance_between_cars = abs(self.car.position[0] - self.car_2.position[0]) + abs(self.car.position[1] - self.car_2.position[1])
+
+        # rewarding either car for going to upper bypass if too close
+        if self.game_map.get_at((self.car.position[0], self.car.position[1])) == (0, 255, 0) and distance_between_cars <= 2 and distance_to_bypass1 <= 2:
+            if self.car.position[1] < self.car_2.position[1]:
+                if self.car.up() and any((int(x), int(y)) == coord for coord in upper_bypass_area):
+                    reward += self.car.get_reward()
+                else:
+                    if self.car_2.up() and any(self.car_2.position[0], self.car_2.position[1]) == coord for coord in upper_bypass_area):
+                        reward_car_2 += self.car.get_reward()
+        elif self.game_map.get_at((self.car.position[0], self.car.position[1])) == (0, 255, 0) and distance_between_cars <= 2 and distance_to_bypass2 <= 2:
+            if self.car.position[1] < self.car_2.position[1]:
+                if self.car.up() and any((self.car.position[0], self.car.position[1])) == coord for coord in upper_bypass_area):
+                    reward += self.car.get_reward()
+                else:
+                    if self.car_2.up() and any((self.car_2.position[0], self.car_2.position[1])) == coord for coord in upper_bypass_area):
+                        reward_car_2 += self.car.get_reward()
+
+        # rewarding either car for going to lower bypass if too close
+    if self.game_map.get_at((self.car.position[0], self.car.position[1])) == (0, 255, 0) and distance_between_cars <= 2 and distance_to_bypass3 <= 2:
+        if self.car.position[1] > self.car_2.position[1]:
+            if self.car.down() and any((self.car.position[0], self.car.position[1])) == coord for coord in lower_bypass_area):
+                reward += self.car.get_reward()
+            else:
+                if self.car_2.down() and any((self.car_2.position[0], self.car_2.position[1])) == coord for coord in lower_bypass_area):
+                    reward_car_2 += self.car.get_reward()
+    elif self.game_map.get_at((self.car.position[0], self.car.position[1])) == (0, 255, 0) and distance_between_cars <= 2 and distance_to_bypass4 <= 2:
+        if self.car.position[1] > self.car_2.position[1]:
+            if self.car.down() and any((self.car.position[0], self.car.position[1])) == coord for coord in lower_bypass_area):
+                reward += self.car.get_reward()
+            else:
+                if self.car_2.down() and any((self.car_2.position[0], self.car_2.position[1])) == coord for coord in lower_bypass_area):
+                    reward_car_2 += self.car.get_reward()
+
         if self.game_map.get_at((self.car.position[0], self.car.position[1])) != (255, 255, 255):
             if 2 <= self.car.position[1] <= 8:
                 if self.car.position[0] == 1:
