@@ -1,6 +1,6 @@
 from ray import tune
 from ray.rllib.algorithms.ppo import PPO
-from git_env import *
+from independent_agents_env import *
 
 tune.run(
     PPO,
