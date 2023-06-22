@@ -3,6 +3,7 @@ from ray.rllib.algorithms.ppo import PPO
 import math
 import time
 import gym
+from gym import spaces
 import numpy as np
 import pygame
 import random
@@ -10,7 +11,7 @@ import random
 WIDTH = 1920
 HEIGHT = 1080
 CELL_SIZE = 100
-GRID_SIZE = (10, 10)
+GRID_SIZE = (11, 11)
 
 class MultiAgentEnv(gym.Env):
     def __init__(self, config=None):
@@ -19,8 +20,8 @@ class MultiAgentEnv(gym.Env):
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 
-        self.action_space = {0: 'turn_right', 1: 'turn_left', 2: 'up', 3: 'down'}
-        self.observation_space = {i: str(i) for i in range(GRID_SIZE[0] * GRID_SIZE[1])}
+        self.action_space = spaces.Discrete(4)
+        self.observation_space = spaces.Discrete(GRID_SIZE[0] * GRID_SIZE[1])
 
         self.clock = pygame.time.Clock()
         self.game_map = pygame.image.load('GRID_MAP_01 copy 2.png').convert()
@@ -128,7 +129,6 @@ def boundary_penalty(x, y, road_corners):
     else:
         return -1
 
-
 def training_function(config):
     x1, y1 = config["car1_x"], config["car1_y"]
     x2, y2 = config["car2_x"], config["car2_y"]
@@ -156,10 +156,10 @@ road_corners = {
 bypass_pos = [(2, 1), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0), (8, 0), (8, 1), (2, 9), (2, 10), (3, 10), (4, 10), (5, 10), (6, 10), (7, 10), (8, 10), (8, 9)]
 
 config = {
-    "car1_x": tune.grid_search(list(range(11))),
-    "car1_y": tune.grid_search(list(range(11))),
-    "car2_x": tune.grid_search(list(range(11))),
-    "car2_y": tune.grid_search(list(range(11)))
+    "car1_x": tune.grid_search([0, 5, 10]),
+    "car1_y": tune.grid_search([0, 5, 10]),
+    "car2_x": tune.grid_search([0, 5, 10]),
+    "car2_y": tune.grid_search([0, 5, 10])
 }
 
 result = tune.run(
