@@ -64,29 +64,29 @@ class MultiAgentCars(MultiAgentEnv):
         if agent_id == 1:
             if 1 <= self.agents[agent_id][0] <= 8 and 2 <= self.agents[agent_id][1] <= 3:
                 if 2 <= self.agents[agent_id][1] <= 3 and self.last_actions.get(agent_id) == 3:
-                    rewards[agent_id]
+                    rewards[agent_id] +=100
             elif 2 <= self.agents[agent_id][0] <= 9 and 7 <= self.agents[agent_id][1] <= 8:
                 if 7 <= self.agents[agent_id][1] <= 8 and self.last_actions.get(agent_id) == 1:
-                    rewards[agent_id]
+                    rewards[agent_id] +=100
             elif 2 <= self.agents[agent_id][1] <= 6 and self.agents[agent_id][0] == 9:
                 if self.agents[agent_id][0] == 9 and self.last_actions.get(agent_id) == 0:
-                    rewards[agent_id]
+                    rewards[agent_id] +=100
             elif 4 <= self.agents[agent_id][1] <= 8 and self.agents[agent_id][0] == 1:
                 if self.agents[agent_id][0] == 1 and self.last_actions.get(agent_id) == 2:
-                    rewards[agent_id]
+                    rewards[agent_id] +=100
         elif agent_id == 2:
             if 2 <= self.agents[agent_id][0] <= 9 and 2 <= self.agents[agent_id][1] <= 3:
                 if 2 <= self.agents[agent_id][1] <= 3 and self.last_actions.get(agent_id) == 1:
-                    rewards[agent_id]
+                    rewards[agent_id] +=100
             elif 1 <= self.agents[agent_id][0] <= 8 and 7 <= self.agents[agent_id][1] <= 8:
                 if 7 <= self.agents[agent_id][1] <= 8 and self.last_actions.get(agent_id) == 3:
-                    rewards[agent_id]
+                    rewards[agent_id] +=100
             elif 4 <= self.agents[agent_id][1] <= 8 and self.agents[agent_id][0] == 9:
                 if self.agents[agent_id][0] == 9 and self.last_actions.get(agent_id) == 2:
-                    rewards[agent_id]
+                    rewards[agent_id] +=100
             elif 2 <= self.agents[agent_id][1] <= 6 and self.agents[agent_id][0] == 1:
                 if self.agents[agent_id][0] == 1 and self.last_actions.get(agent_id) == 0:
-                    rewards[agent_id]
+                    rewards[agent_id] +=100
 
         if agent_id == 1:
             if 1 <= self.agents[agent_id][0] <= 8 and 2 <= self.agents[agent_id][1] <= 3:
