@@ -64,102 +64,102 @@ class MultiAgentCars(MultiAgentEnv):
         if agent_id == 1:
             if 1 <= self.agents[agent_id][0] <= 8 and 2 <= self.agents[agent_id][1] <= 3:
                 if 2 <= self.agents[agent_id][1] <= 3 and self.last_actions.get(agent_id) == 3:
-                    rewards[agent_id] +=1
+                    rewards[agent_id]
             elif 2 <= self.agents[agent_id][0] <= 9 and 7 <= self.agents[agent_id][1] <= 8:
                 if 7 <= self.agents[agent_id][1] <= 8 and self.last_actions.get(agent_id) == 1:
-                    rewards[agent_id] +=1
+                    rewards[agent_id]
             elif 2 <= self.agents[agent_id][1] <= 6 and self.agents[agent_id][0] == 9:
                 if self.agents[agent_id][0] == 9 and self.last_actions.get(agent_id) == 0:
-                    rewards[agent_id] +=1
+                    rewards[agent_id]
             elif 4 <= self.agents[agent_id][1] <= 8 and self.agents[agent_id][0] == 1:
                 if self.agents[agent_id][0] == 1 and self.last_actions.get(agent_id) == 2:
-                    rewards[agent_id] +=1
+                    rewards[agent_id]
         elif agent_id == 2:
             if 2 <= self.agents[agent_id][0] <= 9 and 2 <= self.agents[agent_id][1] <= 3:
                 if 2 <= self.agents[agent_id][1] <= 3 and self.last_actions.get(agent_id) == 1:
-                    rewards[agent_id] +=1
+                    rewards[agent_id]
             elif 1 <= self.agents[agent_id][0] <= 8 and 7 <= self.agents[agent_id][1] <= 8:
                 if 7 <= self.agents[agent_id][1] <= 8 and self.last_actions.get(agent_id) == 3:
-                    rewards[agent_id] +=1
+                    rewards[agent_id]
             elif 4 <= self.agents[agent_id][1] <= 8 and self.agents[agent_id][0] == 9:
                 if self.agents[agent_id][0] == 9 and self.last_actions.get(agent_id) == 2:
-                    rewards[agent_id] +=1
+                    rewards[agent_id]
             elif 2 <= self.agents[agent_id][1] <= 6 and self.agents[agent_id][0] == 1:
                 if self.agents[agent_id][0] == 1 and self.last_actions.get(agent_id) == 0:
-                    rewards[agent_id] +=1
+                    rewards[agent_id]
 
         if agent_id == 1:
             if 1 <= self.agents[agent_id][0] <= 8 and 2 <= self.agents[agent_id][1] <= 3:
                 if self.agents[agent_id] == [self.agents[agent_id][0] + 1, 2] or self.agents[agent_id] == [self.agents[agent_id][0] + 1, 3]:
-                    rewards[agent_id] +=1
+                    rewards[agent_id] +=100
             elif 7 <= self.agents[agent_id][1] <= 8 and 2 <= self.agents[agent_id][0] <= 9:
                 if self.agents[agent_id] == [self.agents[agent_id][0] - 1, 7] or self.agents[agent_id] == [self.agents[agent_id][0] - 1, 8]:
-                    rewards[agent_id] +=1
+                    rewards[agent_id] +=100
             elif 2 <= self.agents[agent_id][1] <= 6 and self.agents[agent_id][0] == 9:
                 if self.agents[agent_id] == [9, self.agents[agent_id][1] + 1]:
-                    rewards[agent_id] +=1
+                    rewards[agent_id] +=100
             elif 4 <= self.agents[agent_id][1] <= 8 and self.agents[agent_id][0] == 1:
                 if self.agents[agent_id] == [1, self.agents[agent_id][1] - 1]:
-                    rewards[agent_id] +=1
+                    rewards[agent_id] +=100
 
         elif agent_id == 2:
             if 2 <= self.agents[agent_id][0] <= 9 and 2 <= self.agents[agent_id][1] <= 3:
                 if self.agents[agent_id] == [self.agents[agent_id][0] - 1, 2] or self.agents[agent_id] == [self.agents[agent_id][0] - 1, 3]:
-                    rewards[agent_id] +=1
+                    rewards[agent_id] +=100
             elif 1 <= self.agents[agent_id][0] <= 8 and 7 <= self.agents[agent_id][1] <= 8:
                 if self.agents[agent_id] == [self.agents[agent_id][0] + 1, 7] or self.agents[agent_id] == [self.agents[agent_id][0] + 1, 8]:
-                    rewards[agent_id] +=1
+                    rewards[agent_id] +=100
             elif 4 <= self.agents[agent_id][1] <= 8 and self.agents[agent_id][0] == 9:
                 if self.agents[agent_id] == [9, self.agents[agent_id][1] - 1]:
-                    rewards[agent_id] +=1
+                    rewards[agent_id] +=100
             elif 2 <= self.agents[agent_id][1] <= 6 and self.agents[agent_id][0] == 1:
                 if self.agents[agent_id] == [1, self.agents[agent_id][1] + 1]:
-                    rewards[agent_id] +=1
+                    rewards[agent_id] +=100
 
         for next_agent_id, next_seeker in self.agents.items():
             rewards[agent_id] -= 1 if agent_id != next_agent_id and self.agents[agent_id] == next_seeker else 0
             if (1 <= self.agents[agent_id][0] <= 2 and 1 <= next_seeker[0] <= 3):
                 if (self.agents[agent_id][1] == 2 and next_seeker[1] == 2) or (self.agents[agent_id][1]== 3 and next_seeker[1] == 3):
                     if self.agents[agent_id][0] == 2 and self.agents[agent_id][1] == self.agents[agent_id][1] - 1:
-                        rewards[agent_id] +=1
+                        rewards[agent_id] +=100
                         while self.agents[agent_id][1] == next_seeker[1]:
                             if self.agents[next_agent_id] == [next_seeker[0], next_seeker[1]]:
-                                rewards[agent_next_id] +=1
+                                rewards[agent_next_id] +=100
                             else:
-                                rewards[agent_next_id] -=1
+                                rewards[agent_next_id] -=100
                     else:
-                        rewards[agent_id] -=1
+                        rewards[agent_id] -=100
                 elif (self.agents[agent_id][1] == 7 and next_seeker[1] == 7) or (self.agents[agent_id][1] == 8 and next_seeker[1] == 8):
                     if self.agents[agent_id][0] == 2 and self.agents[agent_id][1] == self.agents[agent_id][1] + 1:
-                        rewards[agent_id] +=1
+                        rewards[agent_id] +=100
                         while self.agents[agent_id][1] == next_seeker[1]:
                             if self.agents[next_agent_id] == [next_seeker[0], next_seeker[1]]:
-                                rewards[agent_next_id] +=1
+                                rewards[agent_next_id] +=100
                             else:
-                                rewards[agent_next_id] -=1
+                                rewards[agent_next_id] -=100
                     else:
-                        rewards[agent_id] -=1
+                        rewards[agent_id] -=100
             elif (7 <= self.agents[agent_id][0] <= 9 and 7 <= next_seeker[0] <= 9):
                 if (self.agents[agent_id][1] == 2 and next_seeker[1] == 2) or (self.agents[agent_id][1]== 3 and next_seeker[1] == 3):
                     if self.agents[agent_id][0] == 2 and self.agents[agent_id][1] == self.agents[agent_id][1] - 1:
-                        rewards[agent_id] +=1
+                        rewards[agent_id] +=100
                         while self.agents[agent_id][1] == next_seeker[1]:
                             if self.agents[next_agent_id] == [next_seeker[0], next_seeker[1]]:
-                                rewards[agent_next_id] +=1
+                                rewards[agent_next_id] +=100
                             else:
-                                rewards[agent_next_id] -=1
+                                rewards[agent_next_id] -=100
                     else:
-                        rewards[agent_id] -=1
+                        rewards[agent_id] -=100
                 elif (self.agents[agent_id][1] == 7 and next_seeker[1] == 7) or (self.agents[agent_id][1] == 8 and next_seeker[1] == 8):
                     if self.agents[agent_id][0] == 2 and self.agents[agent_id][1] == self.agents[agent_id][1] + 1:
-                        rewards[agent_id] +=1
+                        rewards[agent_id] +=100
                         while self.agents[agent_id][1] == next_seeker[1]:
                             if self.agents[next_agent_id] == [next_seeker[0], next_seeker[1]]:
-                                rewards[agent_next_id] +=1
+                                rewards[agent_next_id] +=100
                             else:
-                                rewards[agent_next_id] -=1
+                                rewards[agent_next_id] -=100
                     else:
-                        rewards[agent_id] -=1
+                        rewards[agent_id] -=100
 
         return rewards[agent_id]
 
@@ -276,3 +276,4 @@ class MultiAgentCars(MultiAgentEnv):
         self.clock.tick(60)
 
 env = MultiAgentCars()
+
