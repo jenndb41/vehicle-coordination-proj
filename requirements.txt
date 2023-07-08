@@ -1,0 +1,8 @@
+TensorFlow==2.12.0
+pygame
+ray==2.2.0
+ray[rllib]
+gymnasium
+gym
+pandas
+dm_tree
